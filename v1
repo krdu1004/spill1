@@ -1,0 +1,127 @@
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Sat Jan  6 13:01:53 2018
+
+@author: kristoffer
+
+
+spill 3
+"""
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+"""
+Created on Wed Jan  3 10:34:38 2018
+
+@author: kristoffer
+"""
+import pygame
+from random import *
+
+class GameObject(pygame.sprite.Sprite):
+     def __init__(self, image, height, speed):
+         self.speed = speed
+         self.image = image
+         self.pos = image.get_rect().move(100, height)
+         
+     def move(self):
+         self.pos = self.pos.move(-self.speed, 0)#fart 
+         if self.pos.right < 0:
+             self.pos.left = 800
+class ballen(pygame.sprite.Sprite):
+    def __init__(self):
+         screen.blit(ball, (ball_x, ball_y)) # Plasserer spiller
+         self.image=ball
+         self.pos = ball.get_rect().move(100, 0)
+         self.rect=ball
+         
+    def move(self):
+         b=1#self.pos = self.pos.move(-self.speed, 0)#fart 
+
+    def jump(self):
+        """ Called when user hits 'jump' button. """
+ 
+        # move down a bit and see if there is a platform below us.
+        # Move down 2 pixels because it doesn't work well if we only move down
+        # 1 when working with a platform moving down.
+        self.rect.y += 2
+        platform_hit_list = pygame.sprite.spritecollide(self, self.level.platform_list, False)
+        self.rect.y -= 2
+ 
+        # If it is ok to jump, set our speed upwards
+        if len(platform_hit_list) > 0 or self.rect.bottom >= SCREEN_HEIGHT:
+            self.change_y = -10
+
+             
+screen = pygame.display.set_mode((800, 450))
+player = pygame.image.load('Cloud.png')
+player = pygame.transform.scale(player, (200, 30))
+
+
+
+background = pygame.image.load('Himmel.png')
+screen.blit(background, (0, 0))
+
+ball = pygame.image.load("Ball.png")
+ball = pygame.transform.scale(ball, (50, 50))
+ball_x = 100
+ball_y = 100
+screen.blit(ball, (ball_x, ball_y)) # Plasserer spiller
+
+pygame.display.update()
+objects = []
+ball1=[]
+"""
+for x in range(7):                    #lager 7 objekter
+     o = GameObject(player, randint(0,450), randint(2,20))
+     objects.append(o)
+     """
+a=0
+     
+for x in range(7):                    #lager 7 objekter
+     o = ballen()
+     ball1.append(o)
+     
+#def kollisjon(self, GameObject):
+#    return self.rect.colliderect(GameObjects.rect)    
+while 1:
+     for event in pygame.event.get():
+         if event.type == pygame.QUIT:
+             pygame.quit()
+         if event.type == pygame.KEYDOWN:
+            pygame.display.update()
+            if e.key == pygame.K_LEFT:
+                ball_x = ball_x - dx
+                #sverdx = sverdx - dx
+                #rustningx = rustningx - dx
+            if e.key == pygame.K_RIGHT:
+                ball_x = ball_x + dx
+                #sverdx = sverdx + dx
+                #rustningx = rustningx + dx
+            if e.key == pygame.K_DOWN:
+                ball_y = ball_y + dy
+                #sverdy = sverdy + dy
+                #rustningy = rustningy + dy
+            if e.key == pygame.K_UP:
+                ball_y = ball_y - dy
+                #sverdy = sverdy - dy
+                #rustningy = rustningy - dy
+     for o in objects:
+         screen.blit(background, o.pos, o.pos)
+     for o in objects:
+         o.move()
+         screen.blit(o.image, o.pos)
+     for o in ball1:
+         screen.blit(background, o.pos, o.pos)
+     for o in ball1:
+         o.move()
+         screen.blit(o.image, o.pos)
+     #screen.blit(background, (0, 0))
+     #ballen.jump(1)
+     screen.blit(ball, (ball_x, ball_y)) # Plasserer spiller
+     #if ball.kollisjon(GameObjects):
+     #    print("123")
+     a+=0.35
+     ball_y+=a
+     pygame.display.update()
+     pygame.time.delay(10)
